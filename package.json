@@ -7,9 +7,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --watch",
-    "start": "webpack-dev-server",
+    "dev": "webpack-dev-server --config ./build/webpack.dev.js",
+    "build": "webpack --config ./build/webpack.prod.js",
     "serve": "node server.js"
   },
   "keywords": [],
@@ -39,6 +38,7 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "webpack-merge": "^4.2.1"
   }
 }
