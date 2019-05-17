@@ -1,4 +1,5 @@
 import { paramString } from './utils/tools'
+import './ind.css'
 
 const arr = [3,5,8]
 const str = paramString(arr)

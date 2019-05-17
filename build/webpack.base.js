@@ -83,21 +83,6 @@ module.exports = {
         use: {
           loader: 'file-loader'
         }
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader', // 挂载 css 到 html 文件， 或者dom元素上
-          {
-            loader: 'css-loader', // 识别处理 css 内容
-            options: {
-              importLoaders: 2, // 如果遇见了css文件跳过前面2个loader的处理
-              modules: true // 开启css模块化
-            }
-          },
-          'sass-loader', // 解析 sass 文件内容为 css 内容
-          'postcss-loader' // 类似loader插槽，在里面可以配置关于 css 解析的plugin， 另外有自己的配置文件postcss.config.js， autoprefixer将处理css中兼容问题，如自动加css浏览器厂商前缀--webskit--
-        ]
       }
     ]
   },
@@ -113,14 +98,14 @@ module.exports = {
       cacheGroups: { // 代码分割缓存组
         vendors: { // vendors分组
           test: /[\\/]node_modules[\\/]/, // 此分组匹配的路径
-          priority: -10, // 权限值：符合test后比较 priority， 越大权限越高
-          filename: 'vendors.js' // 分割打包的js文件名字（默认是入口文件名称）
+          priority: -10 // 权限值：符合test后比较 priority， 越大权限越高
+          // name: 'vendors.js' // 分割打包的js文件名字（默认是入口文件名称）
         },
         default: {
           // minChunks: 2,
           priority: -20,
           reuseExistingChunk: true, // 如果引入的模块已经在其他的地方被打包过， 那么就不再打包，直接会引用已被打包的代码
-          filename: 'common.js'
+          name: 'common.js'
         }
       }
     }
