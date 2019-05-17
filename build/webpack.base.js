@@ -9,6 +9,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
+    chunkFilename: '[name].chunk.js', // chunk 打包出的js文件名字规则
     path: path.resolve(__dirname, '../dist')
   },
   module: {
@@ -55,7 +56,14 @@ module.exports = {
               'regenerator': true,
               'useESModules': false
             }],
-            "@babel/plugin-syntax-dynamic-import"
+            /** 支持import语法引入模块，同时可以使用magic comments(魔法注释), 配合code splitting设置
+             * webpackChunkName： 代码分割名字
+             * webpackPrefetch: < Boolen > 开启模块js的预加载（当网络空闲时）推荐
+             * webpackPreload: < Boolen > 开启模块js的预加载（ 与主页面js一块加载）
+             *
+             * 优化要点： 通过 code splitting 策略让页面的js代码使用覆盖率最高（操作：command + sift + p -> show coverage），然后预加载其他js模块
+             */
+            "@babel/plugin-syntax-dynamic-import" //
           ]
         }
       },
