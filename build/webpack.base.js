@@ -54,7 +54,8 @@ module.exports = {
               // regenerator生成器模块化
               'regenerator': true,
               'useESModules': false
-            }]
+            }],
+            "@babel/plugin-syntax-dynamic-import"
           ]
         }
       },
@@ -91,6 +92,30 @@ module.exports = {
         ]
       }
     ]
+  },
+  optimization: {
+    splitChunks: { // code splitting 代码分割
+      chunks: 'all', // all：所有的都进行代码分割；async： 异步引入的模块进行代码分割； initial： 对同步引入代码做分割，同步一定会走cacheGroups配置
+      minSize: 30000, // 引入的模块小于30000字节(30kb)，不会进行代码分割
+      minChunks: 1, // 引入里 1 次才进行分割
+      maxAsyncRequests: 5, // 同时加载分割代码的个数 （比如浏览器最多同时加载5个js文件）， 超出5的不进行代码分割
+      maxInitialRequests: 3, // 单页面入口（首页）加载 3 个js文件， 超过3个不进行代码分割
+      automaticNameDelimiter: '~', // 分割后生成js文件名： 分组、文件名、hash等之间的连接符（vendors～main~e122dsa1.js）
+      name: true, // 分组设置的filename是否生效
+      cacheGroups: { // 代码分割缓存组
+        vendors: { // vendors分组
+          test: /[\\/]node_modules[\\/]/, // 此分组匹配的路径
+          priority: -10, // 权限值：符合test后比较 priority， 越大权限越高
+          filename: 'vendors.js' // 分割打包的js文件名字（默认是入口文件名称）
+        },
+        default: {
+          // minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true, // 如果引入的模块已经在其他的地方被打包过， 那么就不再打包，直接会引用已被打包的代码
+          filename: 'common.js'
+        }
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
